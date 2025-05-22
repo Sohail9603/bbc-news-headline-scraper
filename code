@@ -1,0 +1,47 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+from collections import Counter
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+# Step 1: Scrape BBC News Headlines
+url = "https://www.bbc.com/news"
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Use flexible logic to extract article titles and links
+data = []
+for tag in soup.find_all('a', href=True):
+    title = tag.get_text(strip=True)
+    link = tag['href']
+    if title and '/news/' in link:
+        if not link.startswith("http"):
+            link = "https://www.bbc.com" + link
+        data.append({"Title": title, "Link": link})
+
+# Step 2: Save to CSV
+df = pd.DataFrame(data)
+df.drop_duplicates(subset="Title", inplace=True)
+df.to_csv("bbc_news_headlines.csv", index=False)
+print("Saved data to bbc_news_headlines.csv")
+
+# Check DataFrame structure
+print(df.head())
+print(df.columns)
+
+# Step 3: Word Frequency Analysis
+if not df.empty and "Title" in df.columns:
+    words = " ".join(df["Title"]).lower().split()
+    filtered_words = [word for word in words if len(word) > 3]
+    word_freq = Counter(filtered_words)
+
+    # Step 4: Word Cloud
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(word_freq)
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.title("BBC News Headlines - Keyword Cloud")
+    plt.show()
+else:
+    print("No headlines were found. Please check the scraping logic or the site structure.")
