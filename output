@@ -1,0 +1,8 @@
+Saved data to bbc_news_headlines.csv
+             Title                                          Link
+0  Israel-Gaza War  https://www.bbc.com/news/topics/c2vdnvdg6xxt
+1   War in Ukraine       https://www.bbc.com/news/war-in-ukraine
+2      US & Canada            https://www.bbc.com/news/us-canada
+3               UK                   https://www.bbc.com/news/uk
+4           Africa         https://www.bbc.com/news/world/africa
+Index(['Title', 'Link'], dtype='object')
