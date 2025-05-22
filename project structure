@@ -1,0 +1,14 @@
+bbc-news-headline-scraper/
+├── data/
+│   └── bbc_news_headlines.csv      # Output CSV file (auto-generated)
+│
+├── images/
+│   └── wordcloud.png               # Output word cloud (optional)
+│
+├── src/
+│   └── bbc_scraper.py              # Main Python scraping script
+│
+├── .gitignore                      # Ignore virtualenv, CSVs, etc.
+├── README.md                       # Project documentation
+├── requirements.txt                # Python dependencies
+└── LICENSE                         # MIT or other license
